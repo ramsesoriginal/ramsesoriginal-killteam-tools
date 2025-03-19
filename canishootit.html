@@ -480,7 +480,7 @@ function collectInputs() {
     }
 
     if (data.attacker.vantage) {
-    	if (data.defender.order=="engage") {
+    	if (data.defender.order=="engage" || !data.defender.cover) {
     		attackerInfoItems.push(data.attacker.vantage2 ? "Attacker has Accurate 1" :  "Attacker has Accurate 2");
     		data.attacker.accurate = true;
     	}
