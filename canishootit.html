@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Can I Shoot It? | KT by ramsesoriginal</title>
+	<style>
+/* General Dark Mode */
+body {
+    background-color: #1a1a1a;
+    color: #f2a900;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 72px;
+    color: #f2a900;
+}
+
+fieldset.outer {
+	display: flex;
+}
+
+#details {
+	flex: 1;
+	min-width: 400px;
+	font-size: 20px;
+	align-content: center;
+}
+
+#details ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+#details li {
+	margin-bottom: 10px;
+}
+
+#Weapon {
+	max-width: 600px;
+	max-height: 80px;
+	overflow-y: scroll;
+}
+.status label,
+#Weapon label {
+    font-size: 12px;
+    padding: 5px 10px;
+
+}
+
+.Faction {
+	display: none;
+}
+
+.explaination {
+	display:none;
+}
+
+
+/* Hide Inputs */
+input {
+    display: none;
+}
+
+/* Label as Buttons */
+label {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    background-color: #333;
+    border: 2px solid #f2a900;
+    color: #f2a900;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Active State */
+input[value="los"]:checked ~ fieldset label[for="los"],
+input[id="atk-engage"]:checked ~ fieldset label[for="atk-engage"],
+input[id="atk-conceal"]:checked ~ fieldset label[for="atk-conceal"],
+input[id="def-engage"]:checked ~ fieldset label[for="def-engage"],
+input[id="def-conceal"]:checked ~ fieldset label[for="def-conceal"],
+input[value="def-cover-personal"]:checked ~ fieldset label[for="def-cover-personal"],
+input[value="def-cover-light"]:checked ~ fieldset label[for="def-cover-light"],
+input[value="def-cover-heavy"]:checked ~ fieldset label[for="def-cover-heavy"],
+input[value="def-obscured"]:checked ~ fieldset label[for="def-obscured"],
+input[value="atk-vantage-2"]:checked ~ fieldset label[for="atk-vantage-2"],
+input[value="atk-vantage-4"]:checked ~ fieldset label[for="atk-vantage-4"],
+input[value="atk-injured"]:checked ~ fieldset label[for="atk-injured"],
+input[value="accurate"]:checked ~ fieldset label[for="accurate"],
+input[value="balanced"]:checked ~ fieldset label[for="balanced"],
+input[value="blast"]:checked ~ fieldset label[for="blast"],
+input[value="ceaseless"]:checked ~ fieldset label[for="ceaseless"],
+input[value="devastating"]:checked ~ fieldset label[for="devastating"],
+input[value="dist-devastating"]:checked ~ fieldset label[for="dist-devastating"],
+input[value="heavy"]:checked ~ fieldset label[for="heavy"],
+input[value="heavy-dist"]:checked ~ fieldset label[for="heavy-dist"],
+input[value="hot"]:checked ~ fieldset label[for="hot"],
+input[value="lethal"]:checked ~ fieldset label[for="lethal"],
+input[value="limited"]:checked ~ fieldset label[for="limited"],
+input[value="piercing"]:checked ~ fieldset label[for="piercing"],
+input[value="piercing-crits"]:checked ~ fieldset label[for="piercing-crits"],
+input[value="punishing"]:checked ~ fieldset label[for="punishing"],
+input[value="range"]:checked ~ fieldset label[for="range"],
+input[value="relentless"]:checked ~ fieldset label[for="relentless"],
+input[value="rending"]:checked ~ fieldset label[for="rending"],
+input[value="saturate"]:checked ~ fieldset label[for="saturate"],
+input[value="seek"]:checked ~ fieldset label[for="seek"],
+input[value="seek-light"]:checked ~ fieldset label[for="seek-light"],
+input[value="severe"]:checked ~ fieldset label[for="severe"],
+input[value="silent"]:checked ~ fieldset label[for="silent"],
+input[value="stun"]:checked ~ fieldset label[for="stun"],
+input[value="torrent"]:checked ~ fieldset label[for="torrent"],
+input[value="def-fight"]:checked ~ fieldset label[for="def-fight"] ,
+input[value="atk-fight"]:checked ~ fieldset label[for="atk-fight"] {
+    background-color: #f2a900;
+    color: #1a1a1a;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Main Output */
+#main {
+    font-size: 72px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Yes/No Colors */
+#main.yes {
+    color: #4caf50; /* Green */
+}
+
+#main.no {
+    color: #ff4d4d; /* Red */
+}
+
+#but {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Space between the two lists */
+    margin-top: 10px;
+    position: relative;
+}
+
+#but > ul {
+    flex: 1;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    min-width: 150px;
+    list-style: none;
+    max-width: calc(50% - 40px);
+    font-size: 32px;
+}
+
+	</style>
+</head>
+<body>
+<input type="checkbox" name="los" id="los" value="los" checked/>
+<input type="radio" name="atk-order" id="atk-engage" value="engage"/>
+<input type="radio" name="atk-order" id="atk-conceal" value="conceal" checked />
+<input type="radio" name="def-order" id="def-engage" value="engage"/>
+<input type="radio" name="def-order" id="def-conceal" value="conceal" checked />
+<input type="checkbox" name="def-cover-personal" id="def-cover-personal" value="def-cover-personal" />
+<input type="checkbox" name="def-cover-light" id="def-cover-light" value="def-cover-light" />
+<input type="checkbox" name="def-cover-heavy" id="def-cover-heavy" value="def-cover-heavy" />
+<input type="checkbox" name="def-obscured" id="def-obscured" value="def-obscured" />
+<input type="checkbox" name="atk-vantage-2" id="atk-vantage-2" value="atk-vantage-2" />
+<input type="checkbox" name="atk-vantage-4" id="atk-vantage-4" value="atk-vantage-4" />
+<input type="checkbox" name="atk-injured" id="atk-injured" value="atk-injured" />
+<input type="checkbox" name="accurate" id="accurate" value="accurate" />
+<input type="checkbox" name="balanced" id="balanced" value="balanced" />
+<input type="checkbox" name="blast" id="blast" value="blast" />
+<input type="checkbox" name="ceaseless" id="ceaseless" value="ceaseless" />
+<input type="checkbox" name="devastating" id="devastating" value="devastating" />
+<input type="checkbox" name="dist-devastating" id="dist-devastating" value="dist-devastating" />
+<input type="checkbox" name="heavy" id="heavy" value="heavy" />
+<input type="checkbox" name="heavy-dist" id="heavy-dist" value="heavy-dist" />
+<input type="checkbox" name="hot" id="hot" value="hot" />
+<input type="checkbox" name="lethal" id="lethal" value="lethal" />
+<input type="checkbox" name="limited" id="limited" value="limited" />
+<input type="checkbox" name="piercing" id="piercing" value="piercing" />
+<input type="checkbox" name="piercing-crits" id="piercing-crits" value="piercing-crits" />
+<input type="checkbox" name="punishing" id="punishing" value="punishing" />
+<input type="checkbox" name="range" id="range" value="range" />
+<input type="checkbox" name="relentless" id="relentless" value="relentless" />
+<input type="checkbox" name="rending" id="rending" value="rending" />
+<input type="checkbox" name="saturate" id="saturate" value="saturate" />
+<input type="checkbox" name="seek" id="seek" value="seek" />
+<input type="checkbox" name="seek-light" id="seek-light" value="seek-light" />
+<input type="checkbox" name="severe" id="severe" value="severe" />
+<input type="checkbox" name="silent" id="silent" value="silent" />
+<input type="checkbox" name="stun" id="stun" value="stun" />
+<input type="checkbox" name="torrent" id="torrent" value="torrent" />
+<input type="checkbox" name="def-fight" id="def-fight" value="def-fight" />
+<input type="checkbox" name="atk-fight" id="atk-fight" value="atk-fight" />
+<fieldset class=outer>
+	<fieldset>
+		<legend>Line of Sight</legend>
+		<label for="los">Visible</label>
+	</fieldset>
+	<fieldset>
+		<legend>Attacker</legend>
+		<fieldset>
+			<legend>Order</legend>
+			<label for="atk-engage">Engage</label>
+			<label for="atk-conceal">Conceal</label>
+		</fieldset>
+		<fieldset>
+			<legend>Terrain</legend>
+			<label for="atk-vantage-2">Vantage 2''
+				<span class="explaination">
+					<ul>
+						<li>An Attacker is on Vantage if it is on an upper level of the killzone</li>
+						<li>The Attacker has to be at least 2'' higher than the defender</li>
+						<li>The feature on which the Attacker is on counts as light cover for the Attacker</li>
+					</ul>
+				</span>
+			</label>
+			<label for="atk-vantage-4">Vantage 4''
+				<span class="explaination">
+					<ul>
+						<li>An Attacker is on Vantage if it is on an upper level of the killzone</li>
+						<li>The Attacker has to be at least 4'' higher than the defender</li>
+						<li>The feature on which the Attacker is on counts as light cover for the Attacker</li>
+					</ul>
+				</span>
+			</label>
+		</fieldset>
+		<fieldset class="status">
+			<legend>Status</legend>
+			<label for="atk-injured">Injured</label>
+			<label for="atk-fight">Enemy Operative in control range</label>
+		</fieldset>
+		<fieldset id="Weapon">
+			<legend>Weapon Keywords</legend>
+			<label for="accurate">Accurate X</label>
+			<label for="balanced">Balanced</label>
+			<label for="blast">Blast X</label>
+			<label for="ceaseless">Ceaseless</label>
+			<label for="devastating">Devastating X</label>
+			<label for="dist-devastating">D'' Devastating X</label>
+			<label for="heavy">Heavy</label>
+			<label for="heavy-dist">Heavy (x only)</label>
+			<label for="hot">Hot</label>
+			<label for="lethal">Lethal X</label>
+			<label for="limited">Limited X</label>
+			<label for="piercing">Piercing X</label>
+			<label for="piercing-crits">Piercing X Crits</label>
+			<label for="punishing">Punishing</label>
+			<label for="range">Range X</label>
+			<label for="relentless">Relentless</label>
+			<label for="rending">Rending</label>
+			<label for="saturate">Saturate</label>
+			<label for="seek">Seek</label>
+			<label for="seek-light">Seek Light</label>
+			<label for="severe">Severe</label>
+			<label for="silent">Silent</label>
+			<label for="stun">Stun</label>
+			<label for="torrent">Torrent X</label>
+		</fieldset>
+		<fieldset class="Faction">
+			<legend>Faction Keywords</legend>
+			<label for="multiarray">Multi-Spectrum Array</label> <!-- Targets cannot be obscured -->
+			<label for="siegespecialist">Siege Specialist</label> <!-- Ranged weapons have saturate -->
+			<label for="ruthlessefficiency">Ruthless Efficiency</label> <!-- Can shoot at targets with enemies in contorl range -->
+			<label for="tzeench">Tzeench</label> <!-- All ranged wepoms have Severe Weapon -->
+		</fieldset>
+	</fieldset>
+	<fieldset>
+		<legend>Defender</legend>
+		<fieldset>
+			<legend>Order</legend>
+			<label for="def-engage">Engage</label>
+			<label for="def-conceal">Conceal</label>
+		</fieldset>
+		<fieldset>
+			<legend>Terrain</legend>
+			<label for="def-cover-personal">Cover (portable barricade)
+				<span class="explaination">
+					<ul>
+						<li>Intervening (you can draw a line from anywhere on the attacker's base to anywhere on the defender's base) portable barricade</li>
+						<li>At least part of the portable barricade feature must be in control range of the defender</li>
+						<li>Attacker and Defender have to be more than 2'' apart</li>
+					</ul>
+				</span>
+			</label>
+			<label for="def-cover-light">Cover (light)
+				<span class="explaination">
+					<ul>
+						<li>Intervening (you can draw a line from anywhere on the attacker's base to anywhere on the defender's base) light terrain feature</li>
+						<li>At least part of the terrain feature must be in control range of the defender</li>
+						<li>Attacker and Defender have to be more than 2'' apart</li>
+						<li>Vantage is light terrain</li>
+					</ul>
+				</span>
+			</label>
+			<label for="def-cover-heavy">Cover (heavy)
+				<span class="explaination">
+					<ul>
+						<li>Intervening (you can draw a line from anywhere on the attacker's base to anywhere on the defender's base) heavy terrain feature</li>
+						<li>At least part of the terrain feature must be in control range of the defender</li>
+						<li>Attacker and Defender have to be more than 2'' apart</li>
+						<li>You cannot benefit form cover and obscuring from the same terrain feature - you may choose which one applies</li>
+					</ul>
+				</span>
+			</label>
+			<label for="def-obscured">Obscured
+				<span class="explaination">
+					<ul>
+						<li>Intervening (you can draw a line from anywhere on the attacker's base to anywhere on the defender's base) heavy terrain feature</li>
+						<li>At least part of the intervening terrain feature must be more than 1'' from either Attacker and Defender</li>
+						<li>You cannot benefit form cover and obscuring from the same terrain feature - you may choose which one applies</li>
+						<li>If the attacker is on Vantage, the Defender cannot be obscured by the terrain feature the attacker is on</li>
+					</ul>
+				</span>
+			</label>
+		</fieldset>
+		<fieldset class="status">
+			<legend>Status</legend>
+			<label for="def-fight">Enemy Operative in control range</label>
+		</fieldset>
+		<fieldset class="Faction">
+			<legend>Faction Keywords</legend>
+			<label for="cultagent">Cult Agent</label> <!-- ignore enemies piercing and Saturate + if your terain cover save, you can either retain an additional one or buff one to crit -->
+			<label for="disgustinglyresilient">Disgustingly Resilient</label> <!-- If getting more than 3 Damage, Roll D6, on 4+ -1 dmg -->
+			<label for="harlequinspanoply">Harlequin's Panoply</label> <!-- ignore piercing when shot -->
+			<label for="midnight">In Midnight Clad</label> <!-- obscured if more then 6'' from enemies it's visible to && it's in control range of heavy terrain or under vantage -->
+			<label for="nurgle">Nurgle</label> <!-- If getting more than 3 Damage, Roll D6, on 5+ -1 dmg -->
+			<label for="stealthy">Stealthy</label> <!-- If you can retain cover saves, retain an additional cover save, or upgrade one to success -->
+			<label for="revoltinglyresilient">Revoltingly Resilient</label> <!-- If getting more than 3 Damage, Roll D6, on 4+ -1 dmg -->
+			<label for="umbralarmor">Umbral Armour</label> <!-- Ignore piercing when shot + Save+1 if within Shadow -->
+			<label for="voidarmour">Void Armour</label> <!-- Re-Roll 1 defence dice against blast and torrent + not affeted by D'' Devastating x -->
+		</fieldset>
+	</fieldset>
+	<fieldset id="details">
+		<legend>Explaination</legend>
+		<aside id="explaination-details">
+		</aside>
+	</fieldset>
+</fieldset>
+<h1>Can I shoot it?</h1>
+<main>
+	<div id="main">
+		
+	</div>
+	<aside id="but">
+	    <ul id="attacker-info" style="visibility: hidden;"></ul>
+	    <ul id="defender-info" style="visibility: hidden;"></ul>
+	</aside>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const labels = document.querySelectorAll("label");
+    const detailsSection = document.getElementById("explaination-details");
+
+    labels.forEach(label => {
+        const explanation = label.querySelector(".explaination");
+        if (explanation) {
+            label.addEventListener("mouseenter", function () {
+                updateDetails(explanation.innerHTML);
+            });
+            label.addEventListener("mouseleave", function () {
+                clearDetails();
+            });
+        }
+    });
+
+    function updateDetails(text) {
+        detailsSection.innerHTML = text;
+    }
+
+    function clearDetails() {
+        detailsSection.innerHTML = "";
+    }
+});
+
+
+function updateInfoList(elementId, items) {
+    const listElement = document.getElementById(elementId);
+    listElement.innerHTML = ""; // Clear previous content
+
+    if (items.length > 0) {
+        items.forEach(text => {
+            const li = document.createElement("li");
+            li.textContent = text;
+            listElement.appendChild(li);
+        });
+        listElement.style.visibility = "visible"; // Show list if it has items
+    } else {
+        listElement.style.visibility = "hidden"; // Hide if empty
+    }
+}
+
+function collectInputs() {
+    const data = {
+        los: document.getElementById('los').checked,
+        attacker: {
+            order: document.querySelector('input[name="atk-order"]:checked').value,
+            vantage2: document.getElementById('atk-vantage-2').checked,
+            vantage4: document.getElementById('atk-vantage-4').checked,
+            injured: document.getElementById('atk-injured').checked,
+            accurate: document.getElementById('accurate').checked,
+			balanced: document.getElementById('balanced').checked,
+			blast: document.getElementById('blast').checked,
+			ceaseless: document.getElementById('ceaseless').checked,
+			devastating: document.getElementById('devastating').checked,
+			distdevastating: document.getElementById('dist-devastating').checked,
+			heavy: document.getElementById('heavy').checked,
+			heavydist: document.getElementById('heavy-dist').checked,
+			hot: document.getElementById('hot').checked,
+			lethal: document.getElementById('lethal').checked,
+			limited: document.getElementById('limited').checked,
+			piercing: document.getElementById('piercing').checked,
+			piercingcrits: document.getElementById('piercing-crits').checked,
+			punishing: document.getElementById('punishing').checked,
+			range: document.getElementById('range').checked,
+			relentless: document.getElementById('relentless').checked,
+			rending: document.getElementById('rending').checked,
+			saturate: document.getElementById('saturate').checked,
+			seek: document.getElementById('seek').checked,
+			seeklight: document.getElementById('seek-light').checked,
+			severe: document.getElementById('severe').checked,
+			silent: document.getElementById('silent').checked,
+			stun: document.getElementById('stun').checked,
+			torrent: document.getElementById('torrent').checked,
+			fight: document.getElementById('atk-fight').checked
+        },
+        defender: {
+            order: document.querySelector('input[name="def-order"]:checked').value,
+            coverPersonal: document.getElementById('def-cover-personal').checked,
+            coverLight: document.getElementById('def-cover-light').checked,
+            coverHeavy: document.getElementById('def-cover-heavy').checked,
+            obscured: document.getElementById('def-obscured').checked,
+			fight: document.getElementById('def-fight').checked
+        }
+    };
+
+    if (data.attacker.seek || data.attacker.seeklight) {
+    	data.defender.coverPersonal = false;
+    	data.defender.coverLight = false;
+    }
+
+    if (data.attacker.seek) {
+    	data.defender.coverHeavy = false;
+    }
+
+    data.defender.cover = data.defender.coverPersonal || data.defender.coverLight || data.defender.coverHeavy;
+    data.attacker.vantage = data.attacker.vantage2 || data.attacker.vantage4;
+
+    output = "";
+    let attackerInfoItems = [];
+    let defenderInfoItems = [];
+    if (!data.los) {
+		output = "no";
+    } else if (data.attacker.fight) {
+		output = "no";
+    } else if (data.defender.fight && !data.attacker.ruthlessefficiency) {
+		output = "no";
+    } else if (data.attacker.order=="conceal" && !data.attacker.silent) {
+		output = "no";
+    } else if (data.defender.order=="conceal" && ((data.defender.cover && !data.attacker.vantage) || (data.attacker.vantage && data.defender.coverHeavy))) {
+		output = "no";
+    } else {
+    	output = "yes";
+    }
+
+    if (data.attacker.injured) {
+    	attackerInfoItems.push("Attacker has -1 to hit");
+    }
+
+    if (data.attacker.vantage) {
+    	if (data.defender.order=="engage") {
+    		attackerInfoItems.push(data.attacker.vantage2 ? "Attacker has Accurate 1" :  "Attacker has Accurate 2");
+    		data.attacker.accurate = true;
+    	}
+    }
+
+    if (data.defender.cover) {
+    	if (!data.attacker.saturate) {
+	    	if (data.attacker.vantage && data.defender.order=="conceal") {
+	    		defenderInfoItems.push("Defender can retain either one critical success or two normal successes without rolling them");
+	    	} else {
+	    		defenderInfoItems.push("Defender can retain one normal success without rolling it");
+	    	}
+    	}
+    }
+
+    if (data.defender.obscured) {
+    	attackerInfoItems.push("Attacker discards 1 success instead of retaining it");
+    	attackerInfoItems.push("Critical hits get retained as normal successes");
+    }
+    
+    const mainElement = document.getElementById('main');
+    mainElement.innerHTML = output;
+    mainElement.className = output.toLowerCase();
+
+    if (data.defender.coverPersonal) {
+    		defenderInfoItems.push("Improve Save Stat by 1");
+    }
+    if (data.attacker.accurate) {
+    		attackerInfoItems.push("Accurate X: retain X normal hits w/out rolling. Stacks, max 2");
+    }
+    if (data.attacker.balanced) {
+    		attackerInfoItems.push("Re-roll one attack dice");
+    }
+    if (data.attacker.blast) {
+    		attackerInfoItems.push("Blast X: Make attacks against all operatives within X'' of target, visible to target");
+    }
+    if (data.attacker.ceaseless) {
+    		attackerInfoItems.push("Re-roll results of one number");
+    }
+    if (data.attacker.devastating) {
+    		attackerInfoItems.push("Devastating X: Crits inflict X Damage, independently of saves");
+    }
+    if (data.attacker.distdevastating) {
+    		attackerInfoItems.push("D'' Devastating X: Crits inflict X Damage, independently of saves, to all operatives withing D''");
+    }
+    if (data.attacker.heavy) {
+    		attackerInfoItems.push("Cannot shoot if moved in this activation");
+    }
+    if (data.attacker.heavydist) {
+    		attackerInfoItems.push("Heavy (X only): Can only move X'' if shooting in this activation");
+    }
+    if (data.attacker.hot) {
+    		attackerInfoItems.push("Roll 1d6, if lower than hit, suffer 2*result dmg");
+    }
+    if (data.attacker.lethal) {
+    		attackerInfoItems.push("Lethal X: Retain X+ as crits");
+    }
+    if (data.attacker.limited) {
+    		attackerInfoItems.push("Limited X: Has X uses per battle");
+    }
+    if (data.attacker.piercing) {
+    		defenderInfoItems.push("Piercing X: Remove X defence dice before rolling");
+    }
+    if (data.attacker.piercingcrits) {
+    		defenderInfoItems.push("Piercing X Crits: Remove X defence dice before rolling if a crit has been scored");
+    }
+    if (data.attacker.punishing) {
+    		attackerInfoItems.push("If any crits have been scored, retain 1 hit as crit");
+    }
+    if (data.attacker.range) {
+    		attackerInfoItems.push("Range X'': Target must be within X'' of shooter");
+    }
+    if (data.attacker.relentless) {
+    		attackerInfoItems.push("Reroll any or all attack dice");
+    }
+    if (data.attacker.rending) {
+    		attackerInfoItems.push("If any crit retained, convert a hit to a crit");
+    }
+    if (data.attacker.severe) {
+    		attackerInfoItems.push("If no crit retained, convert a hit to a crit");
+    }
+    if (data.attacker.stun) {
+    		attackerInfoItems.push("Remove 1APL from target if crit retained");
+    }
+    if (data.attacker.torrent) {
+    		attackerInfoItems.push("Torrent X: Make attacks against all operatives within X'' of target, visible to shooter");
+    }
+
+    if (output == "no")
+    {
+    	attackerInfoItems = [];
+    	defenderInfoItems = [];
+    }
+	updateInfoList("attacker-info", attackerInfoItems);
+	updateInfoList("defender-info", defenderInfoItems);
+
+    console.log(data)
+    return data;
+}
+
+document.addEventListener('change', collectInputs);
+collectInputs();
+</script>
+</body>
+</html>
