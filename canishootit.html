@@ -162,6 +162,38 @@ input[value="atk-fight"]:checked ~ fieldset label[for="atk-fight"] {
     font-size: 32px;
 }
 
+@media (max-width: 768px) {
+	fieldset.outer {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    fieldset {
+        width: 100%;
+        max-width: 400px; /* Keeps it from stretching too wide */
+    }
+
+    label {
+        padding: 15px 25px;
+    }
+
+    #Weapon {
+        max-height: 150px; /* More space for scrolling */
+    }
+
+    h1 {
+        font-size: 48px;
+    }
+
+    #main {
+        font-size: 48px; /* Reduce size of Yes/No text */
+    }
+
+    label:active {
+	    transform: scale(0.95);
+	    background-color: #f2a900; /* Slightly lighter shade for pressed effect */
+	}
+}
 	</style>
 </head>
 <body>
